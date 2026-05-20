@@ -47,3 +47,48 @@ jobs:
           name: logs-api-failure
           path: packages/api/logs/
           retention-days: 1
+
+  test-mobile:
+    name: Test mobile package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run mobile tests
+        working-directory: packages/mobile
+        run: npm test
+        continue-on-error: true
+
+      - name: Upload mobile test result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-mobile
+          path: packages/mobile/test-results.json
+          retention-days: 7
+
+      - name: Upload mobile coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-mobile
+          path: packages/mobile/coverage/
+          retention-days: 7
+
+      - name: Upload mobile failure logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-mobile-failure
+          path: packages/mobile/logs/
+          retention-days: 1
