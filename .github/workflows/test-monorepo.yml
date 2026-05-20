@@ -92,3 +92,45 @@ jobs:
           name: logs-mobile-failure
           path: packages/mobile/logs/
           retention-days: 1
+
+  test-web:
+    name: Test web package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run web test
+        working-directory: packages/web
+        run: npm test
+        continue-on-error: true
+
+      - name: Upload web test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-web
+          path: packages/web/test-results.json
+
+      - name: Upload web coverage
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-web
+          path: packages/web/coverage/
+          retention-days: 7
+
+      - name: Upload web failure logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-web-failure
+          path: packages/web/logs
