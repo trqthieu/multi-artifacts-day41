@@ -1,0 +1,11 @@
+{
+  "name": "@monorepo/api",
+  "version": "1.0.0",
+  "description": "API Service",
+  "scripts": {
+    "test": "jest --coverage --json --outputFile=test-results.json"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

@@ -1,0 +1,49 @@
+name: Test Monorepo
+
+on: [push, pull_request]
+
+jobs:
+  test-api:
+    name: Test API package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run API tests
+        working-directory: packages/api
+        run: npm test
+        continue-on-error: true
+
+      - name: Upload API test result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-api
+          path: packages/api/test-results.json
+          retention-days: 7
+
+      - name: Upload API coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-api
+          path: packages/api/coverage/
+          retention-days: 7
+
+      - name: Upload API failure logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-api-failure
+          path: packages/api/logs/
+          retention-days: 1

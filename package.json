@@ -1,0 +1,17 @@
+{
+  "name": "bai2-multi-artifacts",
+  "version": "1.0.0",
+  "description": "Exercise 2: Multi-Artifact Monorepo",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "npm test --workspaces",
+    "test:api": "npm test --workspace=packages/api",
+    "test:web": "npm test --workspace=packages/web",
+    "test:mobile": "npm test --workspace=packages/mobile"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

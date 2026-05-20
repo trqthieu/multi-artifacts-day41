@@ -1,0 +1,11 @@
+{
+  "name": "@monorepo/mobile",
+  "version": "1.0.0",
+  "description": "Mobile App",
+  "scripts": {
+    "test": "jest --coverage --json --outputFile=test-results.json"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
