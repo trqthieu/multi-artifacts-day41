@@ -1,0 +1,11 @@
+{
+  "name": "@monorepo/web",
+  "version": "1.0.0",
+  "description": "Web Frontend",
+  "scripts": {
+    "test": "jest --coverage --json --outputFile=test-results.json"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
